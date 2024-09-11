@@ -3,25 +3,63 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --light-100: #ffffff;
+  --primary-light: #ffccff;
+  --dark-60: rgba(0, 0, 0, 0.6);
+  --glass: linear-gradient(var(--dark-60), var(--dark-60));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.custom-height {
+  height: calc(100svh - 48px);
+}
+
+.custom-width {
+  width: calc(100% - 48px);
+}
+
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide {
+  min-width: 0;
+}
+
+.video-height {
+  height: calc((9 / 16) * 100vw);
+}
+
+.transition-blur {
+  transition:
+    -webkit-backdrop-filter 1s linear,
+    -moz-backdrop-filter 1s linear,
+    backdrop-filter 1s linear,
+    opacity 1s linear,
+    background 1s linear;
+}
+
+@layer components {
+  .header {
+    @apply absolute z-50 w-full flex items-center justify-between px-4 py-2;
   }
 }

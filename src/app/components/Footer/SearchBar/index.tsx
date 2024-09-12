@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import RoundedButton from "@/app/components/RoundedButton";
+import BorderedContainer from "../../BorderedContainer";
 
 const size = 28;
 
@@ -20,17 +21,19 @@ const SearchBar = () => {
 
   return (
     <form className="searchbar" onSubmit={handleSubmit}>
-      <input
-        ref={ref}
-        type="search"
-        className="w-full h-full ps-4 pe-8 text-white bg-transparent rounded-2xl"
-      />
-      <RoundedButton
-        className="absolute top-1/2 right-0 -translate-y-1/2"
-        onClick={handleClick}
-      >
-        <img src="/search.svg" width={size} height={size} />
-      </RoundedButton>
+      <BorderedContainer className="py-1 relative">
+        <input
+          ref={ref}
+          type="search"
+          className="w-full h-full ps-4 pe-8 text-white bg-transparent rounded-2xl"
+        />
+        <RoundedButton
+          className="absolute top-1/2 right-0 -translate-y-1/2"
+          onClick={handleClick}
+        >
+          <img src="/search.svg" width={size} height={size} />
+        </RoundedButton>
+      </BorderedContainer>
     </form>
   );
 };

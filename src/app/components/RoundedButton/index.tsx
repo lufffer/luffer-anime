@@ -1,5 +1,5 @@
 type Props = {
-  className: string;
+  className?: string;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   children: React.ReactNode;
 };

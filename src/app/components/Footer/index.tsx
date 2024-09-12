@@ -1,39 +1,50 @@
 "use client";
 
-import { useRef, useState } from "react";
-import Hamburger from "hamburger-react";
-import Selector from "./Selector";
-import BorderedContainer from "./BorderedContainer";
-import { useRouter } from "next/navigation";
+import { useRef } from "react";
+import Selector from "@/app/components/Selector";
+import BorderedContainer from "@/app/components/BorderedContainer";
 import SearchBar from "./SearchBar";
+import RoundedButton from "@/app/components/RoundedButton";
 
-const options = ["Home", "Episodes", "Info", "Music", "Cast", "Gallery"];
+const options = [
+  ["Home", "/home"],
+  ["Episodes", "/episodes"],
+  ["Info", "/info"],
+  ["Music", "music"],
+  ["Cast", "/cast"],
+  ["Gallery", "/gallery"],
+];
 
 const Footer = () => {
   const footerRef = useRef<HTMLElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
 
-  const handleToggle = (toggled: boolean) => {
+  const handleClickOpenMenu = () => {
     const footer = footerRef.current!;
 
-    footer.scrollLeft = toggled ? window.innerWidth * 0.9 : 0;
+    footer.scrollLeft = window.innerWidth;
+  };
+
+  const handleClickCloseMenu = () => {
+    const footer = footerRef.current!;
+
+    footer.scrollLeft = 0;
   };
 
   return (
     <footer ref={footerRef} className="footer">
-      <div className="flex my-allow-overflow basis-full justify-between items-center w-full ps-2">
+      <div className="flex justify-between items-center w-full px-2 flex-grow-0 flex-shrink-0">
         <SearchBar />
-        <Hamburger
-          color="#fff"
-          toggled={isOpen}
-          toggle={setIsOpen}
-          onToggle={handleToggle}
-        />
+        <RoundedButton onClick={handleClickOpenMenu}>
+          <img src="/menu.svg" alt="Open menu" />
+        </RoundedButton>
       </div>
-      <div className="relative flex justify-end pe-2 custom-width flex-grow-0 flex-shrink-0">
-        <BorderedContainer className="relative w-full">
+      <div className="flex justify-between items-center w-full px-2 flex-grow-0 flex-shrink-0">
+        <BorderedContainer className="relative w-3/4">
           <Selector options={options} type="link" />
         </BorderedContainer>
+        <RoundedButton onClick={handleClickCloseMenu}>
+          <img src="/close.svg" alt="Close menu" />
+        </RoundedButton>
       </div>
     </footer>
   );

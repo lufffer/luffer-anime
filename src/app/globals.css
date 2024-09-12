@@ -59,12 +59,16 @@ body {
 }
 
 @layer components {
+  .bordered-container {
+    @apply flex justify-center border-white border-2 rounded-2xl px-8;
+  }
+
   .footer,
   .header {
     @apply absolute w-full flex z-50 items-center;
   }
 
-  .my-footer {
+  .footer {
     @apply flex-nowrap bottom-0 overflow-hidden;
   }
 
@@ -77,6 +81,6 @@ body {
   }
 
   .searchbar {
-    @appĺy w-3/4 h-[36px] relative border-2 border-white rounded-2xl;
+    @apply w-3/4 h-[36px];
   }
 }

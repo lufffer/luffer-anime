@@ -1,0 +1,5 @@
+/home --> /home/now#1
+/home/anime#1
+/home/anime/title#1
+/music --> /music/now#1
+

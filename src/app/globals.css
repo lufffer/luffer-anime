@@ -59,7 +59,24 @@ body {
 }
 
 @layer components {
+  .footer,
   .header {
-    @apply absolute z-50 w-full flex items-center justify-between px-4 py-2;
+    @apply absolute w-full flex z-50 items-center;
+  }
+
+  .my-footer {
+    @apply flex-nowrap bottom-0 overflow-hidden;
+  }
+
+  .header {
+    @apply justify-between px-4 py-2;
+  }
+
+  .rounded-button {
+    @apply transition-transform duration-1000 z-10;
+  }
+
+  .searchbar {
+    @appĺy w-3/4 h-[36px] relative border-2 border-white rounded-2xl;
   }
 }

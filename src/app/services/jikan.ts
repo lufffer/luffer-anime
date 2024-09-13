@@ -1,6 +1,7 @@
 import { Animes } from "@/app/types/jikan";
+import { QueryKey } from "@tanstack/react-query";
 
-const selectEndpoint = (page: string, endpoint: string, query: string) => {
+const selectEndpoint = (page: unknown, endpoint: unknown, query: unknown) => {
   let url = "";
 
   switch (page) {
@@ -8,10 +9,7 @@ const selectEndpoint = (page: string, endpoint: string, query: string) => {
       {
         switch (endpoint) {
           case "now":
-            url = process.env.NEXT_PUBLIC_JIKAN_NOW!.replaceAll(
-              "{{page}}",
-              "1",
-            );
+            url = process.env.NEXT_PUBLIC_JIKAN_NOW!;
             break;
           case "upcoming":
             url = process.env.NEXT_PUBLIC_JIKAN_UPCOMING!;
@@ -23,9 +21,7 @@ const selectEndpoint = (page: string, endpoint: string, query: string) => {
             url = process.env.NEXT_PUBLIC_JIKAN_TOP_AIRING!;
             break;
           case "anime":
-            url =
-              process.env.NEXT_PUBLIC_JIKAN_ANIME! +
-              (query ? "/" + query + "&page=" : "");
+            url = process.env.NEXT_PUBLIC_JIKAN_ANIMES!;
             break;
           case "favorites":
             return null;
@@ -34,10 +30,12 @@ const selectEndpoint = (page: string, endpoint: string, query: string) => {
       break;
   }
 
+  url = url.replace("{{page}}", "1").replace("{{q}}", query as string);
+
   return url;
 };
 
-const jikan = (queryKey: string[]) => {
+const jikan = (queryKey: QueryKey) => {
   const url = selectEndpoint(queryKey[0], queryKey[1], queryKey[2]);
 
   return {
@@ -53,6 +51,7 @@ const jikan = (queryKey: string[]) => {
         ? data.pagination.current_page + 1
         : undefined;
     },
+    enabled: queryKey[1] !== "anime" ? true : queryKey[2] !== "" ? true : false,
   };
 };
 

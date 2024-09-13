@@ -1,31 +1,43 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { jikan } from "@/app/services/jikan";
+import { getQueryClient } from "@/app/get-query-client";
 import RoundedButton from "@/app/components/RoundedButton";
-import BorderedContainer from "../../BorderedContainer";
+import BorderedContainer from "@/app/components/BorderedContainer";
 
 const size = 28;
 
 const SearchBar = () => {
+  const queryClient = getQueryClient();
+  const queryCache = queryClient.getQueryCache();
+  const queryKeys = queryCache.getAll().map((cache) => cache.queryKey)[0];
+  const [query, setQuery] = useState(queryKeys);
+  useSuspenseInfiniteQuery(jikan(query));
+
+  const handleSubmit = (e: React.FormEvent) => e.preventDefault();
+
   const ref = useRef<HTMLInputElement>(null);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
-
   const handleClick = () => {
-    const value = ref.current!.value;
+    const input = ref.current!;
+    const value = input.value;
+    const processed = value.replaceAll(" ", "_");
+    const url = `${window.location.origin}/home/anime/${processed}#0`;
 
-    // router.push(`/home/anime/${value.replaceAll(" ", "_")}`);
+    window.history.replaceState(null, "", url);
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
+
+    setQuery(["home", "anime", value]);
   };
 
   return (
     <form className="searchbar" onSubmit={handleSubmit}>
-      <BorderedContainer className="py-1 relative">
+      <BorderedContainer className="relative">
         <input
           ref={ref}
           type="search"
-          className="w-full h-full ps-4 pe-8 text-white bg-transparent rounded-2xl"
+          className="w-full h-full py-1 ps-4 pe-8 text-white bg-transparent rounded-2xl"
         />
         <RoundedButton
           className="absolute top-1/2 right-0 -translate-y-1/2"

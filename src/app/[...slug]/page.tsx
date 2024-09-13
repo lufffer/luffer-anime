@@ -1,7 +1,7 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getQueryClient } from "@/app/get-query-client";
 import { jikan } from "@/app/services/jikan";
-import Home from "./_pages/Home";
+import Home from "./pages/Home";
 
 type Props = {
   params: {
@@ -10,12 +10,18 @@ type Props = {
 };
 
 const Page = ({ params }: Props) => {
+  const slug = params.slug;
   const queryClient = getQueryClient();
   let content = <></>;
 
-  if (params.slug[0] === "home" && params.slug[1] === "now") {
-    void queryClient.prefetchQuery(jikan(["home", "now"]));
-    content = <Home />;
+  if (slug[0] === "home") {
+    if (slug[1] === "now") {
+      void queryClient.prefetchInfiniteQuery(jikan(["home", "now"]));
+      content = <Home />;
+    } else if (slug[1] === "anime") {
+      void queryClient.prefetchInfiniteQuery(jikan(["home", "anime"]));
+      content = <Home />;
+    }
   }
 
   return (

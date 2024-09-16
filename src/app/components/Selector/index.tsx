@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import RoundedButton from "@/app/components/RoundedButton";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -56,14 +56,17 @@ function Selector({ options, type, onClick }: Props) {
           const opt = option;
 
           return (
-            <div className="embla__slide my-allow-overflow basis-full" key={i}>
+            <div
+              className="embla__slide flex-shrink-0 flex-grow-0 basis-full"
+              key={i}
+            >
               {type === "button" ? (
                 <button
                   onClick={onClick || handleClick}
                   className="w-full py-1"
                 >
                   <span
-                    className={`my-selector-option`}
+                    className={`selector-option`}
                     // style={{
                     //   color: isCurrentQueryKey(opt)
                     //     ? "var(--primary-light)"
@@ -75,7 +78,7 @@ function Selector({ options, type, onClick }: Props) {
                 </button>
               ) : type === "marquee" ? (
                 <Marquee
-                  className={`my-selector-option`}
+                  className={`selector-option`}
                   // style={{
                   //   color: isCurrentQueryKey(opt)
                   //     ? "var(--primary-light)"
@@ -92,18 +95,17 @@ function Selector({ options, type, onClick }: Props) {
               ) : (
                 <button className="w-full py-1">
                   <Link
-                    href={
-                      window.location.origin +
-                      opt[1].replaceAll(" ", "_").toLowerCase()
-                    }
-                    className={`my-selector-option`}
+                    href={opt[1].replaceAll(" ", "_").toLowerCase()}
+                    className={`selector-option`}
                     style={{
                       color: isCurrentPath(opt[0])
                         ? "var(--primary-light)"
                         : "var(--light)",
                     }}
                   >
-                    <span className="mx-auto text-center">{opt[0]}</span>
+                    <span className="mx-auto text-center text-white">
+                      {opt[0]}
+                    </span>
                   </Link>
                 </button>
               )}

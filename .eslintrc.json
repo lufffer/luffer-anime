@@ -1,3 +1,6 @@
 {
-  "extends": ["next/typescript"]
+  "extends": ["next/typescript"],
+  "rules": {
+    "max-len": ["error", { "code": 120 }]
+  }
 }

@@ -14,7 +14,7 @@ const SearchBar = () => {
   const queryCache = queryClient.getQueryCache();
   const queryKeys = queryCache.getAll().map((cache) => cache.queryKey)[0];
   const [query, setQuery] = useState(queryKeys);
-  useSuspenseInfiniteQuery(jikan(query));
+  query ? useSuspenseInfiniteQuery(jikan(query)) : undefined;
 
   const handleSubmit = (e: React.FormEvent) => e.preventDefault();
 
